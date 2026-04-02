@@ -9,21 +9,9 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as AboutRouteImport } from './routes/about'
-import { Route as IndexRouteImport } from './routes/index'
 import { Route as ApiPublicRouteRouteImport } from './routes/api/public/route'
 import { Route as ApiPublicExampleIndexRouteImport } from './routes/api/public/example/index'
 
-const AboutRoute = AboutRouteImport.update({
-  id: '/about',
-  path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const IndexRoute = IndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const ApiPublicRouteRoute = ApiPublicRouteRouteImport.update({
   id: '/api/public',
   path: '/api/public',
@@ -36,54 +24,32 @@ const ApiPublicExampleIndexRoute = ApiPublicExampleIndexRouteImport.update({
 } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/api/public': typeof ApiPublicRouteRouteWithChildren
   '/api/public/example/': typeof ApiPublicExampleIndexRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/api/public': typeof ApiPublicRouteRouteWithChildren
   '/api/public/example': typeof ApiPublicExampleIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/': typeof IndexRoute
-  '/about': typeof AboutRoute
   '/api/public': typeof ApiPublicRouteRouteWithChildren
   '/api/public/example/': typeof ApiPublicExampleIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/about' | '/api/public' | '/api/public/example/'
+  fullPaths: '/api/public' | '/api/public/example/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/about' | '/api/public' | '/api/public/example'
-  id: '__root__' | '/' | '/about' | '/api/public' | '/api/public/example/'
+  to: '/api/public' | '/api/public/example'
+  id: '__root__' | '/api/public' | '/api/public/example/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  IndexRoute: typeof IndexRoute
-  AboutRoute: typeof AboutRoute
   ApiPublicRouteRoute: typeof ApiPublicRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/about': {
-      id: '/about'
-      path: '/about'
-      fullPath: '/about'
-      preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/': {
-      id: '/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof IndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/api/public': {
       id: '/api/public'
       path: '/api/public'
@@ -114,8 +80,6 @@ const ApiPublicRouteRouteWithChildren = ApiPublicRouteRoute._addFileChildren(
 )
 
 const rootRouteChildren: RootRouteChildren = {
-  IndexRoute: IndexRoute,
-  AboutRoute: AboutRoute,
   ApiPublicRouteRoute: ApiPublicRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
