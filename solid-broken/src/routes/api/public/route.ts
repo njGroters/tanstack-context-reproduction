@@ -1,7 +1,7 @@
 import { createFileRoute } from '@tanstack/solid-router'
 import { createMiddleware } from '@tanstack/solid-start'
 
-export const addIdentityToContext = createMiddleware().server(
+export const addSupportToContext = createMiddleware().server(
   async ({ next, request }) => {
     const acceptEncodingHeader = request.headers.get('accept-encoding') || ''
 
@@ -13,6 +13,6 @@ export const addIdentityToContext = createMiddleware().server(
 
 export const Route = createFileRoute('/api/public')({
   server: {
-    middleware: [addIdentityToContext],
+    middleware: [addSupportToContext],
   },
 })
