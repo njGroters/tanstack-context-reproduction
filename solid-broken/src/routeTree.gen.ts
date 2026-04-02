@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as ApiPublicRouteRouteImport } from './routes/api/public/route'
 import { Route as ApiPublicExampleIndexRouteImport } from './routes/api/public/example/index'
+import { Route as ApiPublicExampleDirectRouteImport } from './routes/api/public/example/direct'
 
 const ApiPublicRouteRoute = ApiPublicRouteRouteImport.update({
   id: '/api/public',
@@ -22,26 +23,41 @@ const ApiPublicExampleIndexRoute = ApiPublicExampleIndexRouteImport.update({
   path: '/example/',
   getParentRoute: () => ApiPublicRouteRoute,
 } as any)
+const ApiPublicExampleDirectRoute = ApiPublicExampleDirectRouteImport.update({
+  id: '/example/direct',
+  path: '/example/direct',
+  getParentRoute: () => ApiPublicRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/api/public': typeof ApiPublicRouteRouteWithChildren
+  '/api/public/example/direct': typeof ApiPublicExampleDirectRoute
   '/api/public/example/': typeof ApiPublicExampleIndexRoute
 }
 export interface FileRoutesByTo {
   '/api/public': typeof ApiPublicRouteRouteWithChildren
+  '/api/public/example/direct': typeof ApiPublicExampleDirectRoute
   '/api/public/example': typeof ApiPublicExampleIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/api/public': typeof ApiPublicRouteRouteWithChildren
+  '/api/public/example/direct': typeof ApiPublicExampleDirectRoute
   '/api/public/example/': typeof ApiPublicExampleIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/api/public' | '/api/public/example/'
+  fullPaths:
+    | '/api/public'
+    | '/api/public/example/direct'
+    | '/api/public/example/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/api/public' | '/api/public/example'
-  id: '__root__' | '/api/public' | '/api/public/example/'
+  to: '/api/public' | '/api/public/example/direct' | '/api/public/example'
+  id:
+    | '__root__'
+    | '/api/public'
+    | '/api/public/example/direct'
+    | '/api/public/example/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -64,14 +80,23 @@ declare module '@tanstack/solid-router' {
       preLoaderRoute: typeof ApiPublicExampleIndexRouteImport
       parentRoute: typeof ApiPublicRouteRoute
     }
+    '/api/public/example/direct': {
+      id: '/api/public/example/direct'
+      path: '/example/direct'
+      fullPath: '/api/public/example/direct'
+      preLoaderRoute: typeof ApiPublicExampleDirectRouteImport
+      parentRoute: typeof ApiPublicRouteRoute
+    }
   }
 }
 
 interface ApiPublicRouteRouteChildren {
+  ApiPublicExampleDirectRoute: typeof ApiPublicExampleDirectRoute
   ApiPublicExampleIndexRoute: typeof ApiPublicExampleIndexRoute
 }
 
 const ApiPublicRouteRouteChildren: ApiPublicRouteRouteChildren = {
+  ApiPublicExampleDirectRoute: ApiPublicExampleDirectRoute,
   ApiPublicExampleIndexRoute: ApiPublicExampleIndexRoute,
 }
 
