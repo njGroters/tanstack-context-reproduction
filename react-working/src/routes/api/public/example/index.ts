@@ -7,7 +7,6 @@ export const Route = createFileRoute('/api/public/example/')({
         // 'context' is correctly typed
         const { supportsGzip } = context
 
-        // but the 'supportsGzip' field is correctlysupportsGzip  set
         return new Response('context: ' + JSON.stringify(context))
       },
     },
